@@ -1,0 +1,18 @@
+# Mac
+.DS_Store
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# R
+.Rhistory
+.Rapp.history
+.RData
+.Rproj.user/
+.Rproj.user
+*.Rproj
+
+# Folders
+_archives/
+Documentation/
+Data/
