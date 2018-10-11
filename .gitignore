@@ -4,6 +4,9 @@
 # Jupyter Notebooks
 .ipynb_checkpoints
 
+# Python
+*__pycache__
+
 # R
 .Rhistory
 .Rapp.history
@@ -16,3 +19,4 @@
 _archives/
 Documentation/
 Data/
+output/

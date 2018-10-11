@@ -18,13 +18,14 @@ def query(inputs):
     out = inputs[3]
 
     ids = []
-    names = []
+    names_ages = []
+    cities = []
 
     for i in range(k*job, k*(job+1)):
 
+        # Print progress indicator if necessary
         if i%out==0:
-            f = open("../output/temp/{}.txt".format(i),"w")
-            f.close()
+            print(i)
 
         if i>=ind.shape[0]:
             continue
@@ -44,9 +45,8 @@ def query(inputs):
         try:
             response = requests.get(url)
         except requests.exceptions.RequestException as e:
-            f = open("../output/temp/error_{}.txt".format(i),"w")
-            f.write(e)
-            f.close()
+            print("\nError on Individual {}".format(i))
+            print(e)
             continue
 
         soup_multiple = BeautifulSoup(response.text, 'html.parser')
@@ -54,14 +54,28 @@ def query(inputs):
         # Parse out name
         teaser = soup_multiple.find(class_ = 'Teaser')
         if teaser is not None:
-            for j in range(len(teaser.find_all(valign='top'))):
-                name = teaser.find_all(valign='top')[j].find_all('td')[1].find('a').get_text()
-                name = unidecode.unidecode(name)
+
+            for elem in teaser.find_all(valign='top'):
+
+                name_age = None
+                city_list = None
+
+                # Parse out name:
+                name_age = elem.find_all('td')[1].find('a').get_text()
+                name_age = unidecode.unidecode(name_age)
+
+                # Parse out cities:
+                city_info_flag = elem.find_all('td')[4].find('small')
+                if city_info_flag is not None:
+                    city_list = city_info_flag.get_text(strip=True, separator="; ").replace(',;', ',').replace('; ,', ',')
+                    city_list = unidecode.unidecode(city_list)
+
                 ids.append(ind['id'][i])
-                names.append(name)
+                names_ages.append(name_age)
+                cities.append(city_list)
 
-    profiles = pd.DataFrame({'id': ids, 'name': names})
+    profiles = pd.DataFrame({'id': ids, 'name_age': names_ages, 'cities': cities})
 
-    profiles.to_csv('../output/intermediate/profiles_{}.csv'.format(job), index=False)
+    profiles.to_csv('../output/scraper_output/intermediate/profiles_{}.csv'.format(job), index=False)
 
     return profiles
