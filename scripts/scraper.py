@@ -213,9 +213,21 @@ profiles98 = profiles98.get()
 profiles99 = profiles99.get()
 
 # Combine Frames:
-frames = [profiles0, profiles1, profiles2, profiles3, profiles4, profiles5, profiles6, profiles7, profiles8, profiles9, profiles10, profiles11, profiles12, profiles13, profiles14, profiles15, profiles16, profiles17, profiles18, profiles19, profiles20, profiles21, profiles22, profiles23, profiles24, profiles25, profiles26, profiles27, profiles28, profiles29, profiles30, profiles31, profiles32, profiles33, profiles34, profiles35, profiles36, profiles37, profiles38, profiles39, profiles40, profiles41, profiles42, profiles43, profiles44, profiles45, profiles46, profiles47, profiles48, profiles49, profiles50, profiles51, profiles52, profiles53, profiles54, profiles55, profiles56, profiles57, profiles58, profiles59, profiles60, profiles61, profiles62, profiles63, profiles64, profiles65, profiles66, profiles67, profiles68, profiles69, profiles70, profiles71, profiles72, profiles73, profiles74, profiles75, profiles76, profiles77, profiles78, profiles79, profiles80, profiles81, profiles82, profiles83, profiles84, profiles85, profiles86, profiles87, profiles88, profiles89, profiles90, profiles91, profiles92, profiles93, profiles94, profiles95, profiles96, profiles97, profiles98, profiles99]
+frames=[]
+frames.extend([profiles0, profiles1, profiles2, profiles3, profiles4, profiles5, profiles6, profiles7, profiles8, profiles9])
+frames.extend([profiles10, profiles11, profiles12, profiles13, profiles14, profiles15, profiles16, profiles17, profiles18, profiles19])
+frames.extend([profiles20, profiles21, profiles22, profiles23, profiles24, profiles25, profiles26, profiles27, profiles28, profiles29])
+frames.extend([profiles30, profiles31, profiles32, profiles33, profiles34, profiles35, profiles36, profiles37, profiles38, profiles39])
+frames.extend([profiles40, profiles41, profiles42, profiles43, profiles44, profiles45, profiles46, profiles47, profiles48, profiles49])
+frames.extend([profiles50, profiles51, profiles52, profiles53, profiles54, profiles55, profiles56, profiles57, profiles58, profiles59])
+frames.extend([profiles60, profiles61, profiles62, profiles63, profiles64, profiles65, profiles66, profiles67, profiles68, profiles69])
+frames.extend([profiles70, profiles71, profiles72, profiles73, profiles74, profiles75, profiles76, profiles77, profiles78, profiles79])
+frames.extend([profiles80, profiles81, profiles82, profiles83, profiles84, profiles85, profiles86, profiles87, profiles88, profiles89])
+frames.extend([profiles90, profiles91, profiles92, profiles93, profiles94, profiles95, profiles96, profiles97, profiles98, profiles99])
 
 profiles = pd.concat(frames).reset_index(drop=True)
+
+profiles = profiles.drop_duplicates().reset_index(drop=True)
 
 # Export results as CSV
 profiles.to_csv('../output/scraper_output/individuals_clean_ages.csv', index=False)
